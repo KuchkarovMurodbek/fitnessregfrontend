@@ -1,4 +1,6 @@
 import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
   SearchOutlined,
   UsergroupAddOutlined,
   UserOutlined,
@@ -7,11 +9,15 @@ import {
   Avatar,
   Badge,
   Button,
+  Card,
   Col,
 
   Input,
   Modal,
   Row,
+
+  Statistic,
+
   Tooltip,
 } from "antd";
 
@@ -76,6 +82,15 @@ function MainUsers() {
   //   }
   // };
   // const deadline = Date.now() + 1000 * 60 * 60 * 24 * 2 + 1000 * 30;
+
+
+  const highMoney=users.filter((item)=>{
+    return item.price>=100000
+  })
+  const lowMoney=users.filter((item)=>{
+    return item.price<100000
+  })
+
   return (
     <>
       {/* --------SEARCH USERS INPUT ROW -----------*/}
@@ -127,12 +142,38 @@ function MainUsers() {
       >
         <AddUserForm setAddUserModal={setAddUserModal} getData={getData} />
       </Modal>
-
-      <Row>
-        {/* <Col span={12}>
-      <Countdown title="Day Level" value={deadline} format="D:H:m:s " />
-      </Col> */}
-      </Row>
+       
+       
+      <Row gutter={16}>
+      <Col span={12}>
+        <Card>
+          <Statistic
+            title="FULL PAID"
+            value={highMoney.length}
+            precision={0}
+            valueStyle={{
+              color: '#3f8600',
+            }}
+            prefix={<ArrowUpOutlined />}
+            suffix="users"
+          />
+        </Card>
+      </Col>
+      <Col span={12}>
+        <Card>
+          <Statistic
+            title="NO FULL PAID"
+            value={lowMoney.length}
+            precision={0}
+            valueStyle={{
+              color: '#cf1322',
+            }}
+            prefix={<ArrowDownOutlined />}
+            suffix="users"
+          />
+        </Card>
+      </Col>
+    </Row>
     </>
   );
 }

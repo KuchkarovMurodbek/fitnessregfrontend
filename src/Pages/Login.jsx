@@ -1,55 +1,49 @@
-import {  LockOutlined, SyncOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col, Spin, } from "antd";
-
-// import axios from "axios";
+import { LockOutlined, SyncOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Row, Col, Spin } from "antd";
 
 import React, { useEffect } from "react";
 
-import {  useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { login, reset } from "../features/auth/authSlice";
 
-
 const App = () => {
-  const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth)
+  const { user, isLoading, isError, isSuccess, message } = useSelector(
+    (state) => state.auth
+  );
 
   const navigate = useNavigate();
-  const dispatch = useDispatch()
- 
- 
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isError) {
-        console.log(message)
+      console.log(message);
     }
 
     if (isSuccess || user) {
-      navigate('/dashboard')
+      navigate("/dashboard");
     }
 
-    dispatch(reset())
-  }, [user, isError, isSuccess, message, navigate, dispatch])
+    dispatch(reset());
+  }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onFinish = (values) => {
-     dispatch(login(values))
-  
+    dispatch(login(values));
   };
 
   const onFinishFailed = (err) => {
-
     console.log(err);
   };
-  const example={
-   height:'100vh',
-   width:'100%',
-   display:'flex',
-   justifyContent:'center',
-  
-  padding:' 30px 50px',
-  
-  background: 'rgba(0, 0, 0, 0.05)',
- 
-  }
+  const example = {
+    height: "100vh",
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+
+    padding: " 30px 50px",
+
+    background: "rgba(0, 0, 0, 0.05)",
+  };
   const antIcon = (
     <SyncOutlined
       style={{
@@ -58,11 +52,13 @@ const App = () => {
       spin
     />
   );
-  
+
   if (isLoading) {
-    return  <div style={example} >
-    <Spin indicator={antIcon}/>
-  </div>
+    return (
+      <div style={example}>
+        <Spin indicator={antIcon} />
+      </div>
+    );
   }
 
   return (
@@ -148,7 +144,6 @@ const App = () => {
             >
               Accountga kirish
             </Button>
-         
           </Form.Item>
         </Form>
       </Col>

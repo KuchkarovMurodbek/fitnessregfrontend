@@ -2,11 +2,12 @@ import { DollarOutlined, LockOutlined, PhoneFilled, SmileOutlined, UserOutlined 
 import { Button, DatePicker, Form, Input,  notification, Space } from 'antd'
 import axios from 'axios';
 import React from 'react'
+import { useSelector } from 'react-redux';
 
 function AddUserForm({setAddUserModal,getData}) {
 
   const [form] = Form.useForm();
-  const token = localStorage.getItem("admin")
+  const { token } = useSelector((state) => state.auth.user)
  
 async function dataUser(data) {
     await axios.post("https://fitnessreg.herokuapp.com/api/users", data,{headers:{

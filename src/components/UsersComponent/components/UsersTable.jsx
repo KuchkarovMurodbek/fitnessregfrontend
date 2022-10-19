@@ -142,7 +142,7 @@ function UsersTable({ data ,getData}) {
 
 
 
-     <Modal title="Delete User" visible={isDeleteModalOpen} onOk={handleOk} onCancel={handleCancel}
+     <Modal title="Delete User" open={isDeleteModalOpen} onOk={handleOk} onCancel={handleCancel}
     
    
   
