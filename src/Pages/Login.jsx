@@ -1,42 +1,69 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input, Row, Col, message } from "antd";
+import {  LockOutlined, SyncOutlined, UserOutlined } from "@ant-design/icons";
+import { Button, Form, Input, Row, Col, Spin, } from "antd";
 
-import axios from "axios";
+// import axios from "axios";
 
-import React from "react";
+import React, { useEffect } from "react";
 
 import {  useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux'
+import { login, reset } from "../features/auth/authSlice";
 
 
 const App = () => {
-  
+  const { user, isLoading, isError, isSuccess, message } = useSelector( (state) => state.auth)
 
   const navigate = useNavigate();
-  const onFinish = async(values) => {
-   await axios({
-      method: "POST",
-      url: "https://fitnessreg.herokuapp.com/api/admin/login",
-      data: values,
-    })
-      .then((res) => {
-        localStorage.setItem("admin", res.data.token);
-        localStorage.setItem("name", res.data.name);
+  const dispatch = useDispatch()
+ 
+ 
 
-        if (res.status === 200) {
-       
-          navigate("/dashboard");
-         
-          window.location.reload();
-        }
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+  useEffect(() => {
+    if (isError) {
+        console.log(message)
+    }
+
+    if (isSuccess || user) {
+      navigate('/dashboard')
+    }
+
+    dispatch(reset())
+  }, [user, isError, isSuccess, message, navigate, dispatch])
+
+  const onFinish = (values) => {
+     dispatch(login(values))
+  
   };
 
   const onFinishFailed = (err) => {
-    message.error("Submit failed!");
+
     console.log(err);
   };
+  const example={
+   height:'100vh',
+   width:'100%',
+   display:'flex',
+   justifyContent:'center',
+  
+  padding:' 30px 50px',
+  
+  background: 'rgba(0, 0, 0, 0.05)',
+ 
+  }
+  const antIcon = (
+    <SyncOutlined
+      style={{
+        fontSize: 54,
+      }}
+      spin
+    />
+  );
+  
+  if (isLoading) {
+    return  <div style={example} >
+    <Spin indicator={antIcon}/>
+  </div>
+  }
 
   return (
     <Row

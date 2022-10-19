@@ -1,8 +1,10 @@
 import {   PieChartOutlined,  SettingOutlined, TeamOutlined,  UserOutlined} from "@ant-design/icons";
 import { Avatar, Layout, Menu } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
+import { logout, reset } from "../../features/auth/authSlice";
 const { Header, Content, Sider } = Layout;
 
 function getItem(label, key, icon, children) {
@@ -16,7 +18,6 @@ function getItem(label, key, icon, children) {
 
 const items = [
   getItem("Users", "0", <UserOutlined />),
-  // getItem("Users", "1", <UserOutlined />),
   getItem("Statistics", "1", <PieChartOutlined />),
   getItem("Team", "2", <TeamOutlined />),
   getItem("Settings", "3", <SettingOutlined />),
@@ -25,15 +26,41 @@ const items = [
 const LayoutDIv = ({ children }) => {
   const [collapsed, setCollapsed] = useState(true);
   const navigate = useNavigate();
+  const dispatch = useDispatch()
+
+  const { user } = useSelector((state) => state.auth)
+
  
   function onClicked(e) {
     const path = items[e.key].label.toLowerCase();
     navigate(path);
   }
+  useEffect(() => {
+    // if (isError) {
+    //   console.log(message)
+    // }
+
+    if (!user) {
+      navigate('/login')
+    }
+  
+
+
+    // dispatch(getGoals())
+
+    return () => {
+      dispatch(reset())
+    }
+  // eslint-disable-next-line no-sparse-arrays
+  }, [user, navigate, dispatch])
+
+  // if (isLoading) {
+  //   return <Spinner />
+  // }
 
   function logoutFunction(){
-    localStorage.removeItem("admin")
-    localStorage.removeItem("name")
+    dispatch(logout())
+    dispatch(reset())
     navigate('/')
   }
 
@@ -84,7 +111,7 @@ const LayoutDIv = ({ children }) => {
         }}
         icon={<UserOutlined />}
       />
-          <span style={{color:'#fff',fontSize:'20px',marginRight:'10px'}}>{localStorage.getItem('name').toUpperCase()}</span>
+          <span style={{color:'#fff',fontSize:'20px',marginRight:'10px'}}>{user?.name.toUpperCase()}</span>
           <button onClick={logoutFunction}
             style={{ height: "30px",width:'70px',color:'black',fontWeight:'500',border:"none",  display: "flex", alignItems: "center" ,justifyContent:'center'}}
           >

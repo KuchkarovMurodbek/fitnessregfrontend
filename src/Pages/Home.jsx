@@ -38,14 +38,7 @@ const App = () => {
             </Button>
           </Link>
 
-          {/* <Link to={"/register"}>
-            <Button
-              type="success"
-              style={{ color: "white", height: "30px", fontWeight: "600", background:'#001529' }}
-            >
-              Register
-            </Button>
-          </Link> */}
+     
         </div>
       </Header>
       <Content

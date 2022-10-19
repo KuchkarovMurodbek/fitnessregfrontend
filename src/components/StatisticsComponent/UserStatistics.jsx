@@ -24,7 +24,7 @@ function UserStatistics() {
   return (
     <>
     <Row>
-      <Col lg={9}>
+      <Col lg={9} sm={22} md={12}>
       <Chart
       chartType="PieChart"
       data={data}

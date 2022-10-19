@@ -17,6 +17,7 @@ import {
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import AddUserForm from "./components/AddUserForm";
 import UsersTable from "./components/UsersTable";
 
@@ -24,7 +25,7 @@ function MainUsers() {
   const [query, setQuery] = useState("");
   const [users, setUsers] = useState([]);
   const [addUserModal, setAddUserModal] = useState(false);
-  const token = localStorage.getItem("admin");
+  const { token } = useSelector((state) => state.auth.user)
 
   function handleFunction(e) {
     setQuery(e.target.value);

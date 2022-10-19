@@ -4,7 +4,7 @@ import Dashboard from "./Pages/Dashboard";
 import Home from "./Pages/Home";
 import Login from "./Pages/Login";
 import NoFound from "./Pages/NoFound";
-import Register from "./Pages/Register";
+
 
 import MainUsers from "./components/UsersComponent/MainUsers";
 import UserStatistics from "./components/StatisticsComponent/UserStatistics";
@@ -19,8 +19,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route  path={"/dashboard"} element={localStorage.getItem("admin") ? <Dashboard />: <NoFound />}>
+        {/* <Route path="/register" element={<Register />} /> */}
+        <Route  path={"/dashboard"} element={ <Dashboard />}>
           {/* <Route index path="adduser" element={<AddUser />} /> */}
           <Route path="users" element={<MainUsers />} />
           <Route path="statistics" element={<UserStatistics />} />
