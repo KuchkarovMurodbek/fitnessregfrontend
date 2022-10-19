@@ -3,12 +3,14 @@ import {  Button, message, Modal, Table, Tag,Typography } from "antd";
 import axios from "axios";
 
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 const { Text, Title } = Typography;
 function UsersTable({ data ,getData}) {
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idUser,setIdUser]=useState(null)
-  const token = localStorage.getItem("admin");
+  const { token } = useSelector((state) => state.auth.user)
+
   const columns = [
     {
       title: "firstname",
